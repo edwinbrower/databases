@@ -30,6 +30,14 @@ module.exports = {
         callback(results);
       });
     }
+    // post: function (username, callback) {
+
+    //   db.dbConnection.query('SELECT username FROM users WHERE username="' + username + '"', (err, userId) => {
+    //     db.dbConnection.query('INSERT into messages (text, user, roomname) values ("' + text + '", "' + userId[0].user_id + '", "' + roomname + '")', (err, results) => {
+    //       callback(results);
+    //     });
+    //   });
+    // }
   }
 };
 module.exports.users.post('edwin', (data) => { console.log(data); });

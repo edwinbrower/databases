@@ -23,13 +23,22 @@ module.exports = {
 
   users: {
     // Ditto as above
-    get: function (req, res) {
-      res.send(JSON.stringify(data));
+    // get: function (req, res) {
+    //   res.send(JSON.stringify(data));
 
+    // },
+    get: function (req, res) {
+      console.log(req);
+      models.users.get( (data)=>{
+        res.send(JSON.stringify(data));
+      });
     },
     post: function (req, res) {
-      console.log('request url', req.headers.referer);
-      res.send(JSON.stringify(data));
+      // console.log('request url', req.headers.referer);
+      // res.send(JSON.stringify(data));
+      models.users.post(req.body.username, (data) => {
+        res.send(201);
+      });
     }
   }
 };
