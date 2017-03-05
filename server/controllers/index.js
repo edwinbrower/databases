@@ -5,24 +5,31 @@ module.exports = {
   messages: {
     get: function (req, res) {
       // console.log(req.params);
-      res.send(req.params.id);
+      models.messages.get( (data)=>{
+        // console.log(data);
+        res.send(JSON.stringify(data));
+      });
     }, // a function which handles a get request for all messages
     post: function (req, res) {
-      res.send(req.params.id);
-
+      console.log('req body', req.body);
+      // console.log(req);
+      // console.log(res);
+      // res.send(JSON.stringify(data));
+      models.messages.post(req.body.username, req.body.text, req.body.roomname, (data) => {
+        res.send(201);
+      });
     } // a function which handles posting a message to the database
   },
 
   users: {
     // Ditto as above
     get: function (req, res) {
-      res.send(req.params.id);
+      res.send(JSON.stringify(data));
 
     },
     post: function (req, res) {
       console.log('request url', req.headers.referer);
-      res.send(req.params.id);
-
+      res.send(JSON.stringify(data));
     }
   }
 };

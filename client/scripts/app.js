@@ -43,7 +43,8 @@ var app = {
     $.ajax({
       url: app.server,
       type: 'POST',
-      data: message,
+      data: JSON.stringify(message),
+      contentType: 'application/json',
       success: function (data) {
         // Clear messages input
         app.$message.val('');
@@ -64,7 +65,10 @@ var app = {
       data: { order: '-createdAt' },
       contentType: 'application/json',
       success: function(data) {
+        console.log('data client received: ', data);
         // Don't bother if we have nothing to work with
+        data = {results: JSON.parse(data)};
+
         if (!data.results || !data.results.length) { return; }
 
         // Store messages for caching later
@@ -117,7 +121,6 @@ var app = {
 
   renderRoomList: function(messages) {
     app.$roomSelect.html('<option value="__newRoom">New room...</option>');
-
     if (messages) {
       var rooms = {};
       messages.forEach(function(message) {

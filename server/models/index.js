@@ -3,13 +3,15 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function (callback) {
-      db.dbConnection.query('SELECT * FROM messages', (err, results) => {
+      // db.dbConnection.query('SELECT * FROM messages', (err, results) => {
+      db.dbConnection.query('SELECT users.username, messages.roomname, messages.text FROM messages INNER JOIN users ON messages.user = users.user_id', (err, results) => {
+        // console.log('inside model ', results);
         callback(results);
       });
     }, // a function which produces all the messages
-    post: function (name, message, callback) {
-      db.dbConnection.query('SELECT user_id FROM users WHERE name="' + name + '"', (err, userId) => {
-        db.dbConnection.query('INSERT into messages (message, user) values ("' + message + '", "' + userId[0].user_id + '")', (err, results) => {
+    post: function (username, text, roomname, callback) {
+      db.dbConnection.query('SELECT user_id FROM users WHERE username="' + username + '"', (err, userId) => {
+        db.dbConnection.query('INSERT into messages (text, user, roomname) values ("' + text + '", "' + userId[0].user_id + '", "' + roomname + '")', (err, results) => {
           callback(results);
         });
       });
@@ -23,16 +25,16 @@ module.exports = {
         callback(results);
       });
     },
-    post: function (user, callback) {
-      db.dbConnection.query('INSERT into users (name) values ("' + user + '")', (err, results) => {
+    post: function (username, callback) {
+      db.dbConnection.query('INSERT into users (username) values ("' + username + '")', (err, results) => {
         callback(results);
       });
     }
   }
 };
-// module.exports.users.post('zebra', (data) => {console.log(data)});
+module.exports.users.post('edwin', (data) => { console.log(data); });
 // module.exports.users.get((data) => {console.log(data)}); 
-// module.exports.messages.post('edwin', 'hello', (data) => {});
+// module.exports.messages.post('edwin', 'lol', 'lobby', (data) => {});
 // module.exports.messages.get((data) => {console.log(data)});
 
 // server/models/index.js defines the messages and users models that 
