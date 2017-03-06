@@ -12,6 +12,7 @@ module.exports = {
     post: function (username, text, roomname, callback) {
       db.dbConnection.query('SELECT user_id FROM users WHERE username="' + username + '"', (err, userId) => {
         db.dbConnection.query('INSERT into messages (text, user, roomname) values ("' + text + '", "' + userId[0].user_id + '", "' + roomname + '")', (err, results) => {
+          console.log(userId);
           callback(results);
         });
       });
@@ -25,22 +26,20 @@ module.exports = {
         callback(results);
       });
     },
+    // post: function (username, callback) {
+    //   db.dbConnection.query('INSERT into users (username) values ("' + username + '")', (err, results) => {
+    //     callback(results);
+    //   });
+    // }
     post: function (username, callback) {
-      db.dbConnection.query('INSERT into users (username) values ("' + username + '")', (err, results) => {
+      console.log('inside post ', username);
+      db.dbConnection.query('INSERT INTO users (username) VALUES ("' + username + '")', (err, results) => {
         callback(results);
       });
     }
-    // post: function (username, callback) {
-
-    //   db.dbConnection.query('SELECT username FROM users WHERE username="' + username + '"', (err, userId) => {
-    //     db.dbConnection.query('INSERT into messages (text, user, roomname) values ("' + text + '", "' + userId[0].user_id + '", "' + roomname + '")', (err, results) => {
-    //       callback(results);
-    //     });
-    //   });
-    // }
   }
 };
-module.exports.users.post('edwin', (data) => { console.log(data); });
+// module.exports.users.post('steve', (data) => { console.log(data); });
 // module.exports.users.get((data) => {console.log(data)}); 
 // module.exports.messages.post('edwin', 'lol', 'lobby', (data) => {});
 // module.exports.messages.get((data) => {console.log(data)});

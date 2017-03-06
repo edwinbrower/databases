@@ -4,6 +4,7 @@ var app = {
   //TODO: The current 'handleUsernameClick' function just toggles the class 'friend'
   //to all messages sent by the user
   // server: 'http://parse.CAMPUS.hackreactor.com/chatterbox/classes/messages',
+  // server: 'http://127.0.0.1:3000/classes/messages',
   server: 'http://127.0.0.1:3000/classes/messages',
   username: 'anonymous',
   roomname: 'lobby',
@@ -14,7 +15,7 @@ var app = {
   init: function() {
     // Get username
     app.username = window.location.search.substr(10);
-    
+
     // Cache jQuery selectors
     app.$message = $('#message');
     app.$chats = $('#chats');
@@ -26,6 +27,10 @@ var app = {
     app.$send.on('submit', app.handleSubmit);
     app.$roomSelect.on('change', app.handleRoomChange);
 
+    var message = {
+      username: app.username,
+    };
+    app.send(message, 'http://127.0.0.1:3000/classes/users');
     // Fetch previous messages
     // app.startSpinner();
     app.fetch(false);
@@ -36,12 +41,13 @@ var app = {
     }, 3000);
   },
 
-  send: function(message) {
+  send: function(message, destination) {
     // app.startSpinner();
 
     // POST the message to the server
     $.ajax({
-      url: app.server,
+      // url: app.server,
+      url: destination,
       type: 'POST',
       data: JSON.stringify(message),
       contentType: 'application/json',
@@ -222,7 +228,7 @@ var app = {
       roomname: app.roomname || 'lobby'
     };
 
-    app.send(message);
+    app.send(message, app.server);
 
     // Stop the form from submitting
     event.preventDefault();

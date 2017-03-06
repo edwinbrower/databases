@@ -1,5 +1,4 @@
 var models = require('../models');
-// var url = 
 
 module.exports = {
   messages: {
@@ -16,7 +15,7 @@ module.exports = {
       // console.log(res);
       // res.send(JSON.stringify(data));
       models.messages.post(req.body.username, req.body.text, req.body.roomname, (data) => {
-        res.send(201);
+        res.sendStatus(201);
       });
     } // a function which handles posting a message to the database
   },
@@ -28,7 +27,7 @@ module.exports = {
 
     // },
     get: function (req, res) {
-      console.log(req);
+      console.log('hi');
       models.users.get( (data)=>{
         res.send(JSON.stringify(data));
       });
@@ -36,8 +35,9 @@ module.exports = {
     post: function (req, res) {
       // console.log('request url', req.headers.referer);
       // res.send(JSON.stringify(data));
+      console.log(req.body.username);
       models.users.post(req.body.username, (data) => {
-        res.send(201);
+        res.sendStatus(201);
       });
     }
   }
