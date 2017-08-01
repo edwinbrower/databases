@@ -8,16 +8,18 @@ USE chat;
 -- );
 
 CREATE TABLE users (
-  id int NOT NULL primary key auto_increment,
-  username varchar(30),
+  id int NOT NULL AUTO_INCREMENT,
+  username varchar(30) NOT NULL,
+  PRIMARY KEY (ID)
   -- UNIQUE(username)
 );
 
 CREATE TABLE messages (
-  id int NOT NULL primary key auto_increment,
+  id int NOT NULL AUTO_INCREMENT,
   text varchar(140),
-  roomname varchar(30),
-  userid int,
+  roomname varchar(30) NOT NULL,
+  userid int NOT NULL,
+  PRIMARY KEY (ID)
   -- room int,
   -- foreign key(room) references rooms(room_id),
   -- foreign key(user) references users(user_id)
