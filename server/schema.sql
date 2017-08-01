@@ -9,19 +9,19 @@ USE chat;
 -- );
 
 CREATE TABLE users (
-  user_id int not null primary key auto_increment,
+  id int NOT NULL primary key auto_increment,
   username varchar(30),
-  UNIQUE(username)
+  -- UNIQUE(username)
 );
 
 CREATE TABLE messages (
-  message_id int not null primary key auto_increment,
+  id int NOT NULL primary key auto_increment,
   text varchar(140),
   roomname varchar(30),
-  user int,
+  userid int,
   -- room int,
   -- foreign key(room) references rooms(room_id),
-  foreign key(user) references users(user_id)
+  -- foreign key(user) references users(user_id)
 );
 
 -- CREATE TABLE users_rooms (

@@ -27,7 +27,7 @@ module.exports = {
 
     // },
     get: function (req, res) {
-      console.log('hi');
+      console.log('users get');
       models.users.get( (data)=>{
         res.send(JSON.stringify(data));
       });

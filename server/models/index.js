@@ -3,18 +3,18 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function (callback) {
-      // db.dbConnection.query('SELECT * FROM messages', (err, results) => {
-      db.dbConnection.query('SELECT users.username, messages.roomname, messages.text FROM messages INNER JOIN users ON messages.user = users.user_id', (err, results) => {
+      let queryStr = 'SELECT users.username, messages.roomname, messages.text FROM messages INNER JOIN users ON messages.userid = users.id';
+      // db.query('SELECT * FROM messages', (err, results) => {
+      db.query(queryStr, (err, results) => {
         // console.log('inside model ', results);
         callback(results);
       });
     }, // a function which produces all the messages
     post: function (username, text, roomname, callback) {
-      db.dbConnection.query('SELECT user_id FROM users WHERE username="' + username + '"', (err, userId) => {
-        db.dbConnection.query('INSERT into messages (text, user, roomname) values ("' + text + '", "' + userId[0].user_id + '", "' + roomname + '")', (err, results) => {
-          console.log(userId);
-          callback(results);
-        });
+      let queryStr = 'INSERT into messages(text, userid, roomname) values ("' + text + '", (SELECT id FROM users WHERE username="' + username + '"), "' + roomname + '")';
+      db.query(queryStr, (err, results) => {
+        console.log(results);
+        callback(results);
       });
     } // a function which can be used to insert a message into the database
   },
@@ -22,18 +22,20 @@ module.exports = {
   users: {
     // Ditto as above.
     get: function (callback) {
-      db.dbConnection.query('SELECT * FROM users', (err, results) => {
+      let queryStr = 'SELECT * FROM users';
+      db.query(queryStr, (err, results) => {
         callback(results);
       });
     },
     // post: function (username, callback) {
-    //   db.dbConnection.query('INSERT into users (username) values ("' + username + '")', (err, results) => {
+    //   db.query('INSERT into users (username) values ("' + username + '")', (err, results) => {
     //     callback(results);
     //   });
     // }
     post: function (username, callback) {
       console.log('inside post ', username);
-      db.dbConnection.query('INSERT INTO users (username) VALUES ("' + username + '")', (err, results) => {
+      let queryStr = 'INSERT INTO users (username) VALUES ("' + username + '")';
+      db.query(queryStr, (err, results) => {
         callback(results);
       });
     }
