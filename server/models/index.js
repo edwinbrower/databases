@@ -11,7 +11,7 @@ module.exports = {
       });
     }, // a function which produces all the messages
     post: function (username, text, roomname, callback) {
-      let queryStr = 'INSERT into messages(text, userid, roomname) values ("' + text + '", (SELECT id FROM users WHERE username="' + username + '"), "' + roomname + '")';
+      let queryStr = 'INSERT into messages(text, userid, roomname) values (?, (SELECT id FROM users WHERE username=?), ?)';
       db.query(queryStr, (err, results) => {
         console.log(results);
         callback(results);
@@ -34,7 +34,7 @@ module.exports = {
     // }
     post: function (username, callback) {
       console.log('inside post ', username);
-      let queryStr = 'INSERT INTO users (username) VALUES ("' + username + '")';
+      let queryStr = 'INSERT INTO users (username) VALUES (?)';
       db.query(queryStr, (err, results) => {
         callback(results);
       });

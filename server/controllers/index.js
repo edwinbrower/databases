@@ -17,7 +17,8 @@ module.exports = {
       // console.log(req);
       // console.log(res);
       // res.send(JSON.stringify(data));
-      models.messages.post(req.body.username, req.body.text, req.body.roomname, (err, data) => {
+      let params = [req.body.message, req.body.username, req.body.roomname];
+      models.messages.post(params, (err, data) => {
         if (err) {
           console.log(err);
         }
@@ -45,7 +46,8 @@ module.exports = {
       // console.log('request url', req.headers.referer);
       // res.send(JSON.stringify(data));
       console.log(req.body.username);
-      models.users.post(req.body.username, (err, data) => {
+      let params = [req.body.username];
+      models.users.post(params, (err, data) => {
         if (err) {
           console.log(err);
         }
