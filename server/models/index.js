@@ -7,14 +7,14 @@ module.exports = {
       // db.query('SELECT * FROM messages', (err, results) => {
       db.query(queryStr, (err, results) => {
         // console.log('inside model ', results);
-        callback(results);
+        callback(err, results);
       });
     }, // a function which produces all the messages
-    post: function (username, text, roomname, callback) {
+    post: function (params, callback) {
       let queryStr = 'INSERT into messages(text, userid, roomname) values (?, (SELECT id FROM users WHERE username=?), ?)';
-      db.query(queryStr, (err, results) => {
+      db.query(queryStr, params, (err, results) => {
         console.log(results);
-        callback(results);
+        callback(err, results);
       });
     } // a function which can be used to insert a message into the database
   },
@@ -24,7 +24,7 @@ module.exports = {
     get: function (callback) {
       let queryStr = 'SELECT * FROM users';
       db.query(queryStr, (err, results) => {
-        callback(results);
+        callback(err, results);
       });
     },
     // post: function (username, callback) {
@@ -32,11 +32,11 @@ module.exports = {
     //     callback(results);
     //   });
     // }
-    post: function (username, callback) {
+    post: function (params, callback) {
       console.log('inside post ', username);
       let queryStr = 'INSERT INTO users (username) VALUES (?)';
-      db.query(queryStr, (err, results) => {
-        callback(results);
+      db.query(queryStr, params, (err, results) => {
+        callback(err, results);
       });
     }
   }
