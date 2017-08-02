@@ -16,7 +16,7 @@ CREATE TABLE users (
 
 CREATE TABLE messages (
   id int NOT NULL AUTO_INCREMENT,
-  text varchar(140),
+  message varchar(140),
   roomname varchar(30) NOT NULL,
   userid int NOT NULL,
   PRIMARY KEY (ID)
