@@ -3,16 +3,22 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function (callback) {
-      let queryStr = 'SELECT users.username, messages.roomname, messages.text FROM messages INNER JOIN users ON messages.userid = users.id';
+      let queryStr = 'SELECT users.username, messages.id, messages.roomname, messages.text FROM messages LEFT OUTER JOIN users ON (messages.userid = users.id) order by messages.id desc';
       // db.query('SELECT * FROM messages', (err, results) => {
       db.query(queryStr, (err, results) => {
+        if (err) {
+          console.log(err);
+        }
         // console.log('inside model ', results);
         callback(err, results);
       });
     }, // a function which produces all the messages
     post: function (params, callback) {
-      let queryStr = 'INSERT into messages(text, userid, roomname) values (?, (SELECT id FROM users WHERE username=?), ?)';
+      let queryStr = 'INSERT into messages(text, userid, roomname) values (?, (SELECT id FROM users WHERE username=? limit 1), ?)';
       db.query(queryStr, params, (err, results) => {
+        if (err) {
+          console.log(err);
+        }
         console.log(results);
         callback(err, results);
       });
@@ -24,6 +30,9 @@ module.exports = {
     get: function (callback) {
       let queryStr = 'SELECT * FROM users';
       db.query(queryStr, (err, results) => {
+        if (err) {
+          console.log(err);
+        }
         callback(err, results);
       });
     },
@@ -33,9 +42,12 @@ module.exports = {
     //   });
     // }
     post: function (params, callback) {
-      console.log('inside post ', username);
+      console.log('inside post ', params);
       let queryStr = 'INSERT INTO users (username) VALUES (?)';
       db.query(queryStr, params, (err, results) => {
+        if (err) {
+          console.log(err);
+        }
         callback(err, results);
       });
     }
