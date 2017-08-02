@@ -12,3 +12,9 @@ Load the schema into your MySQL server with mysql -u root < path/to/schema.sql
 Run: 
 
 npm install
+
+To start server run: npm start
+
+To start db run: mysql -u root 
+
+npm test to test
