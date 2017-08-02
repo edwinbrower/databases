@@ -55,7 +55,7 @@ describe('Persistent Node Chat Server', function() {
         dbConnection.query(queryString, queryArgs, function(err, results) {
           // Should have one result:
           expect(results.length).to.equal(1);
-
+          console.log('in the spec', results);
           // TODO: If you don't have a column named text, change this test. // DONE
           expect(results[0].message).to.equal('In mercy\'s name, three days is all I need.');
 
@@ -69,7 +69,7 @@ describe('Persistent Node Chat Server', function() {
     // Let's insert a message into the db
     // var queryString = 'SELECT * FROM messages'; // WE added this . was empty string '';
     // var queryArgs = [];
-    var queryString = 'INSERT INTO Messages(text, userid, roomname) VALUES (?, ?, ?)';
+    var queryString = 'INSERT INTO Messages(message, userid, roomname) VALUES (?, ?, ?)';
     var queryArgs = ['Men like you can never change!', 1, 'main'];
     // TODO - The exact query string and query args to use
     // here depend on the schema you design, so I'll leave
@@ -82,7 +82,8 @@ describe('Persistent Node Chat Server', function() {
       // the message we just inserted:
       request('http://127.0.0.1:3000/classes/messages', function(error, response, body) {
         var messageLog = JSON.parse(body);
-        expect(messageLog[0].text).to.equal('Men like you can never change!');
+        console.log('2nd spec', messageLog);
+        expect(messageLog[0].message).to.equal('Men like you can never change!');
         expect(messageLog[0].roomname).to.equal('main');
         done();
       });
