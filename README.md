@@ -8,3 +8,7 @@ Make sure your mysql is downloaded and has been started.
 mysql.server start and mysql.server stop will start and stop it.
 
 Load the schema into your MySQL server with mysql -u root < path/to/schema.sql
+
+Run: 
+
+npm install
